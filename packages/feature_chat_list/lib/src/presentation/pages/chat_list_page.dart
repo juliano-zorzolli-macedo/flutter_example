@@ -2,7 +2,6 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import '../../presentation/bloc/chat_list_cubit.dart';
 import '../bloc/chat_list_state.dart';
 
@@ -12,7 +11,6 @@ class ChatListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      // Injeta o Cubit configurado no GetIt
       create: (_) => GetIt.I<ChatListCubit>()..loadConversations(),
       child: Scaffold(
         appBar: AppBar(
@@ -26,7 +24,6 @@ class ChatListPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            // Barra de busca Mockada (Visual apenas)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Container(
