@@ -54,7 +54,7 @@ melos bootstrap
 
 ## 🏃🏻‍♂️ Como Rodar os Apps
 
-Clique no **Play** (▶) ao lado do bloco para rodar diretamente no emulador/device conectado.
+Clique no **Play** (▶) ao lado do bloco para rodar diretamente no emulador/device conectado ou então navegar até o app que quer rodar pelo terminal e digitar o comando flutter run.
 
 ### 📱 UI Catalog (Design System)
 Use para desenvolver e testar componentes visuais isoladamente.
