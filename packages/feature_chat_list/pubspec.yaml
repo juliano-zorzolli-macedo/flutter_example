@@ -1,0 +1,28 @@
+name: feature_chat_list
+description: Feature module for listing chat conversations.
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^8.1.4
+  equatable: ^2.0.5
+
+  # DI
+  get_it: ^7.6.7
+
+  # Local Modules
+  design_system:
+    path: ../design_system
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0

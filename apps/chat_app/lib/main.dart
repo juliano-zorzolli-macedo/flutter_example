@@ -1,65 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:design_system/design_system.dart';
+import 'package:feature_chat_list/feature_chat_list.dart';
 
 void main() {
-  runApp(const MyApp());
+  FeatureChatListModule.init();
+
+  runApp(const ChatApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+final _router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const ChatListPage(),
+    ),
+    // Futuras rotas (ex: Detalhe da conversa, Configurações) entrariam aqui
+  ],
+);
+
+class ChatApp extends StatelessWidget {
+  const ChatApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MaterialApp.router(
+      title: 'Phiz Chat',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      routerConfig: _router,
     );
   }
 }

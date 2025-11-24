@@ -1,4 +1,6 @@
-# melos_managed_dependency_overrides: design_system
+# melos_managed_dependency_overrides: design_system,feature_chat_list
 dependency_overrides:
   design_system:
     path: ../../packages/design_system
+  feature_chat_list:
+    path: ../../packages/feature_chat_list
