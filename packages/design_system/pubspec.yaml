@@ -1,0 +1,24 @@
+name: design_system
+description: "Shared UI Components and Theme."
+version: 0.0.1
+publish_to: 'none' # Pacote interno
+
+environment:
+  sdk: ^3.10.0
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Útil para exportar assets (imagens/fontes) para os apps
+  # google_fonts: ... (opcional)
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  # Se tiver imagens ou fontes compartilhadas, declare aqui

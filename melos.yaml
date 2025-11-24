@@ -1,0 +1,32 @@
+name: flutter_example
+
+packages:
+  - apps/*
+  - packages/**
+
+scripts:
+  # =============================================================================
+  # === BOOTSTRAP & CLEAN =======================================================
+  # =============================================================================
+  bootstrap:
+    run: melos bootstrap
+    description: Link local packages and install external dependencies.
+
+  clean:
+    run: melos exec -- "flutter clean"
+    description: Run "flutter clean" in all packages.
+
+  clean:ui_catalog:
+    run: |
+      melos exec --scope=ui_catalog -- flutter clean
+      melos bootstrap
+    description: "Deep clean and rebuild dependencies for the UI Catalog app."
+
+  # =============================================================================
+  # === CODE GENERATION =========================================================
+  # =============================================================================
+  l10n:ui_catalog:
+    run: melos exec --scope=ui_catalog -- flutter gen-l10n
+    description: Generate localization files for the UI Catalog.
+
+  postbootstrap: echo "Workspace bootstrapped!"
