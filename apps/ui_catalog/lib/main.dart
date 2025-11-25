@@ -8,7 +8,6 @@ void main() {
   runApp(const UiCatalogApp());
 }
 
-// --- Controller de Idioma ---
 class LanguageController extends ChangeNotifier {
   static final LanguageController instance = LanguageController();
   Locale? _currentLocale;
@@ -19,7 +18,6 @@ class LanguageController extends ChangeNotifier {
   }
 }
 
-// --- Rotas ---
 final _router = GoRouter(
   initialLocation: '/',
   routes: [
@@ -40,7 +38,6 @@ final _router = GoRouter(
   ],
 );
 
-// --- App ---
 class UiCatalogApp extends StatelessWidget {
   const UiCatalogApp({super.key});
 
@@ -77,7 +74,6 @@ class UiCatalogApp extends StatelessWidget {
   }
 }
 
-// --- TELA HOME ---
 class CatalogHomeScreen extends StatelessWidget {
   const CatalogHomeScreen({super.key});
 
@@ -158,7 +154,6 @@ class CatalogHomeScreen extends StatelessWidget {
   }
 }
 
-// --- TELA DE PALETA DE CORES ---
 class ColorPaletteScreen extends StatelessWidget {
   const ColorPaletteScreen({super.key});
 
@@ -243,7 +238,6 @@ class _ColorItem {
   _ColorItem(this.name, this.color);
 }
 
-// --- TELA DE COMPONENTES DE CHAT (ATUALIZADA) ---
 class ChatComponentsScreen extends StatelessWidget {
   const ChatComponentsScreen({super.key});
 
@@ -257,13 +251,12 @@ class ChatComponentsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Seção Avatars
           _buildSectionHeader("Avatars"),
           Container(
             padding: const EdgeInsets.all(16),
             color: Colors.white,
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 DSAvatar(size: 48, imageUrl: null),
                 SizedBox(width: 16),
                 DSAvatar(size: 48, imageUrl: "https://ui-avatars.com/api/?name=User+Name"),
@@ -275,7 +268,6 @@ class ChatComponentsScreen extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // Seção Inputs
           _buildSectionHeader("Inputs"),
           Container(
             padding: const EdgeInsets.all(16),
@@ -285,7 +277,6 @@ class ChatComponentsScreen extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // Seção Chat Tiles
           _buildSectionHeader(s.sectionListTiles),
           Card(
             elevation: 0,
@@ -313,7 +304,6 @@ class ChatComponentsScreen extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // Seção Mensagens
           _buildSectionHeader(s.sectionBubbles),
           Container(
             padding: const EdgeInsets.all(16),

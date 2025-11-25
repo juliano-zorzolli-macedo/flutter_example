@@ -15,7 +15,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _storage = CoreSecureStorage();
 
-  // Controlador para o campo de texto
   final _controller = TextEditingController(text: '{"id": 1, "msg": "Olá Nativo!"}');
 
   String _statusMessage = 'Aguardando ação...';
@@ -28,8 +27,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     try {
-      // Envia o texto (JSON) para o Android encriptar e salvar
-      await _storage.saveChatList(_controller.text);
+     await _storage.saveChatList(_controller.text);
 
       setState(() {
         _statusMessage = '✅ Sucesso! Dados encriptados e salvos no Android.';
@@ -45,8 +43,6 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  // Se você implementou o getChatList no Android, descomente abaixo para testar
-  /*
   Future<void> _readFromNative() async {
     setState(() => _isLoading = true);
     try {
@@ -60,7 +56,6 @@ class _MyAppState extends State<MyApp> {
       setState(() => _isLoading = false);
     }
   }
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -100,12 +95,12 @@ class _MyAppState extends State<MyApp> {
                   foregroundColor: Colors.white,
                 ),
               ),
-              // const SizedBox(height: 12),
-              // OutlinedButton.icon(
-              //   onPressed: _isLoading ? null : _readFromNative,
-              //   icon: const Icon(Icons.lock_open),
-              //   label: const Text('Ler Decriptado'),
-              // ),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                onPressed: _isLoading ? null : _readFromNative,
+                icon: const Icon(Icons.lock_open),
+                label: const Text('Ler Decriptado'),
+              ),
               const SizedBox(height: 32),
               const Divider(),
               const SizedBox(height: 16),
