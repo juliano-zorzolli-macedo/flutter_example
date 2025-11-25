@@ -15,7 +15,7 @@ class ChatListPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-              'Phiz',
+              'ChatApp',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
           ),
           actions: [
