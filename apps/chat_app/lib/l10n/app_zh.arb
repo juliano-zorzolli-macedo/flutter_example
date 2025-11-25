@@ -1,0 +1,8 @@
+{
+  "appTitle": "Chat App",
+  "actionSearch": "搜索",
+  "errorGeneric": "加载对话时出错",
+  "tabChats": "聊天",
+  "statusTyping": "正在输入...",
+  "labelYou": "你"
+}
