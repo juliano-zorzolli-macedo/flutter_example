@@ -71,7 +71,7 @@ class ChatApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Phiz Chat',
+      title: 'Chat App',
       debugShowCheckedModeBanner: false,
 
       theme: AppTheme.lightTheme,
