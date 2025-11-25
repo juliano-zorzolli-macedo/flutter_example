@@ -1,6 +1,7 @@
 library feature_chat_list;
 
 import 'package:get_it/get_it.dart';
+import 'package:core_secure_storage/core_secure_storage.dart';
 import 'src/data/datasources/chat_mock_datasource.dart';
 import 'src/data/repositories/chat_repository_impl.dart';
 import 'src/domain/repositories/chat_repository.dart';
@@ -14,12 +15,15 @@ class FeatureChatListModule {
   static void init() {
     final i = GetIt.instance;
 
+    // 2. Registrar o Storage
+    i.registerLazySingleton(() => CoreSecureStorage());
+
     // Datasource
     i.registerLazySingleton(() => ChatMockDataSource());
 
-    // Repository
+    // 3. Repository
     i.registerLazySingleton<ChatRepository>(
-          () => ChatRepositoryImpl(i()),
+          () => ChatRepositoryImpl(i(), i()),
     );
 
     // UseCase

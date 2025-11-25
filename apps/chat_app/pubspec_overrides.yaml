@@ -1,5 +1,7 @@
-# melos_managed_dependency_overrides: design_system,feature_chat_list
+# melos_managed_dependency_overrides: design_system,feature_chat_list,core_secure_storage
 dependency_overrides:
+  core_secure_storage:
+    path: ../../packages/core_secure_storage
   design_system:
     path: ../../packages/design_system
   feature_chat_list:

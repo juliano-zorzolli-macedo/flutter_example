@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  core_secure_storage:
+    path: ../core_secure_storage
+
   # State Management
   flutter_bloc: ^8.1.4
   equatable: ^2.0.5

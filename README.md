@@ -11,11 +11,12 @@ Ele utiliza uma estrutura de **Monorepo** gerenciada pelo **Melos**, com o objet
 O workspace é dividido em duas categorias principais:
 
 -   **`apps/`**: Contém os dois pontos de entrada "buildáveis" do projeto.
-    -   `chat_app`: O aplicativo principal, que integra todas as features e a lógica de negócio.
+    -   `chat_app`: O aplicativo principal. Orquestra as features e injeção de dependência.
     -   `ui_catalog`: Um app "Showcase" para visualizar os componentes do `design_system` de forma isolada.
 -   **`packages/`**: Contém os módulos compartilhados (bibliotecas).
-    -   `design_system`: Nosso UI Kit. Contém apenas widgets visuais, temas e cores.
-    -   *(outros pacotes... ex: `feature_login`, `core_network`)*
+    -   **`design_system`**: Nosso UI Kit. Contém apenas widgets visuais, temas e cores.
+    -   **`feature_chat_list`**: Módulo funcional que implementa a listagem de conversas utilizando **Clean Architecture** e **Cubit**.
+    -   **`core_secure_storage`**: Plugin que implementa a comunicação com nativo (MethodChannels) para criptografia e persistência segura.
 
 ---
 
@@ -23,15 +24,31 @@ O workspace é dividido em duas categorias principais:
 
 O "De/Para" arquitetural do Flutter em relação ao Android Nativo:
 
-| Conceito           | Android (Kotlin/Jetpack) | Flutter (Nossa Arquitetura) |
-|:-------------------|:-------------------------|:----------------------------|
-| **Monorepo Build** | Gradle (include project) | **Melos**                   |
-| **Architecture**   | MVVM / MVI               | **Bloc / Cubit**            |
-| **View State**     | StateFlow / LiveData     | **Bloc State (Equatable)**  |
-| **User Intent**    | UIEvent / Intent         | **Bloc Event**              |
-| **Navigation**     | Jetpack Navigation       | **GoRouter**                |
-| **DI**             | Hilt / Koin              | **GetIt + Injectable**      |
-| **Localization**   | `strings.xml`            | **`.arb` Files (gen-l10n)** |
+| Conceito           | Android (Kotlin/Jetpack)          | Flutter (Nossa Arquitetura)         |
+|:-------------------|:----------------------------------|:------------------------------------|
+| **Monorepo Build** | Gradle (include project)          | **Melos**                           |
+| **Architecture**   | MVVM / MVI + Clean                | **Clean Arch + Bloc/Cubit**         |
+| **View State**     | StateFlow / LiveData              | **Bloc State (Equatable)**          |
+| **Navigation**     | Jetpack Navigation                | **GoRouter**                        |
+| **DI**             | Hilt / Koin                       | **GetIt + Injectable**              |
+| **Security/Cache** | DataStore + KeyStore              | **MethodChannel + Core Module**     |
+| **Localization**   | `strings.xml`                     | **`.arb` Files (gen-l10n)**         |
+
+---
+
+## 🔐 Segurança e Integração Nativa
+
+O projeto possui um módulo dedicado à segurança (`packages/core_secure_storage`) que demonstra como **Flutter e Android Nativo** conversam.
+
+**Fluxo de Persistência Segura:**
+1.  **Flutter:** O repositório converte os modelos (ex: Lista de Chats) para JSON.
+2.  **Bridge:** Envia a string via `MethodChannel` para o Android.
+3.  **Android (Kotlin):**
+    *   Gera/Recupera uma chave secreta no **Android KeyStore** (Hardware-backed security).
+    *   Encripta os dados usando o algoritmo **AES/GCM**.
+    *   Salva os bytes encriptados no **Jetpack DataStore**.
+
+Isso garante que dados sensíveis não fiquem em texto plano no dispositivo.
 
 ---
 
@@ -50,6 +67,7 @@ Rode este comando sempre que clonar o projeto ou mudar de branch. Ele "liga" os 
 ```bash
 melos bootstrap
 ```
+
 ---
 
 ## 🏃🏻‍♂️ Como Rodar os Apps
@@ -60,7 +78,10 @@ Clique no **Play** (▶) ao lado do bloco para rodar diretamente no emulador/dev
 Use para desenvolver e testar componentes visuais isoladamente.
 
 ### 💬 Chat App (Produto Principal)
-O aplicativo final com lógica de negócio.
+O aplicativo final. Ao iniciar, ele carrega a **Lista de Conversas** (Feature Module) e, em background, salva o cache encriptado no Android.
+
+**Nota para Android Studio:**
+Para que o Android Studio reconheça o contexto nativo (Gradle, Logcat, SDK), abra a pasta `apps/chat_app/android` como um projeto separado (File > Open).
 
 ---
 
@@ -93,7 +114,9 @@ melos run clean:ui_catalog
 ### Como funciona
 
 -   **`apps/*`**: Pontos de entrada. Orquestram a navegação, DI e configuração de temas. Não contêm regras de negócio.
--   **`packages/*`**: Módulos de código. Onde a lógica de UI (`design_system`), features (`feature_chat`), ou core (`core_network`) vivem.
+-   **`packages/*`**: Módulos de código.
+    -   **Features:** (ex: `feature_chat_list`) Contêm Domain, Data (Repositories/Datasources) e Presentation (Bloc/Pages).
+    -   **Core/Shared:** (ex: `design_system`, `core_secure_storage`) Utilitários e UI compartilhada.
 
 ### Passo a passo: Criando um novo módulo
 
@@ -101,7 +124,6 @@ Exemplo: Criando um novo módulo chamado `feature_example`.
 
 **1. Gerar o pacote Flutter:**
 Rode o comando na raiz do workspace alterando o 'feature_example' para o nome do módulo que será criado.
-'.
 ```bash
 flutter create --template=package packages/feature_example
 ```
@@ -119,5 +141,3 @@ Sincronize as novas dependências no workspace.
 ```bash
 melos bootstrap
 ```
-
----

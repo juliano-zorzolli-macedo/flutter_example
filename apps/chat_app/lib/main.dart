@@ -5,7 +5,6 @@ import 'package:feature_chat_list/feature_chat_list.dart';
 
 void main() {
   FeatureChatListModule.init();
-
   runApp(const ChatApp());
 }
 

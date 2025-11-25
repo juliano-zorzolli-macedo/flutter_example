@@ -3,7 +3,6 @@ import '../../domain/entities/conversation.dart';
 class ChatMockDataSource {
   Future<List<Conversation>> getConversations() async {
     await Future.delayed(const Duration(seconds: 1));
-
     return [
       const Conversation(
         id: '1',
