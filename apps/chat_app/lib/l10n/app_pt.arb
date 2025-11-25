@@ -1,0 +1,14 @@
+{
+  "appTitle": "Phiz",
+  "@appTitle": {
+    "description": "Nome do aplicativo"
+  },
+  "actionSearch": "Buscar",
+  "@actionSearch": {
+    "description": "Texto placeholder da barra de busca"
+  },
+  "errorGeneric": "Erro ao carregar conversas",
+  "@errorGeneric": {
+    "description": "Mensagem de erro padrão"
+  }
+}
