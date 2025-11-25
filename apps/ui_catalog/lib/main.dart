@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-// Certifique-se de gerar l10n para o ui_catalog também: 'melos run l10n:ui_catalog'
 import 'l10n/app_localizations.dart';
 
 void main() {
   runApp(const UiCatalogApp());
 }
 
-// Controller simples para troca de idioma em tempo real
+// --- Controller de Idioma ---
 class LanguageController extends ChangeNotifier {
   static final LanguageController instance = LanguageController();
   Locale? _currentLocale;
@@ -20,7 +19,7 @@ class LanguageController extends ChangeNotifier {
   }
 }
 
-// Configuração de Rotas do Catálogo
+// --- Rotas ---
 final _router = GoRouter(
   initialLocation: '/',
   routes: [
@@ -41,6 +40,7 @@ final _router = GoRouter(
   ],
 );
 
+// --- App ---
 class UiCatalogApp extends StatelessWidget {
   const UiCatalogApp({super.key});
 
@@ -54,10 +54,7 @@ class UiCatalogApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
 
           locale: LanguageController.instance.currentLocale,
-
-          // Usa o tema centralizado do Design System
           theme: AppTheme.lightTheme.copyWith(
-            // Override leve apenas para o catálogo ter fundo cinza nas telas de menu
             scaffoldBackgroundColor: const Color(0xFFF5F5F5),
           ),
 
@@ -80,7 +77,7 @@ class UiCatalogApp extends StatelessWidget {
   }
 }
 
-// --- TELA HOME DO CATÁLOGO ---
+// --- TELA HOME ---
 class CatalogHomeScreen extends StatelessWidget {
   const CatalogHomeScreen({super.key});
 
@@ -100,6 +97,7 @@ class CatalogHomeScreen extends StatelessWidget {
             itemBuilder: (context) => [
               const PopupMenuItem(value: Locale('pt'), child: Text("🇧🇷 Português")),
               const PopupMenuItem(value: Locale('en'), child: Text("🇺🇸 English")),
+              const PopupMenuItem(value: Locale('zh'), child: Text("🇨🇳 中文")),
             ],
           ),
           const SizedBox(width: 8),
@@ -245,48 +243,118 @@ class _ColorItem {
   _ColorItem(this.name, this.color);
 }
 
-// --- TELA DE COMPONENTES DE CHAT ---
+// --- TELA DE COMPONENTES DE CHAT (ATUALIZADA) ---
 class ChatComponentsScreen extends StatelessWidget {
   const ChatComponentsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final s = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF0F2F5),
       appBar: AppBar(title: Text(s.screenChatTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Text("List Tiles", style: TextStyle(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
+          // Seção Avatars
+          _buildSectionHeader("Avatars"),
+          Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: Row(
+              children: const [
+                DSAvatar(size: 48, imageUrl: null),
+                SizedBox(width: 16),
+                DSAvatar(size: 48, imageUrl: "https://ui-avatars.com/api/?name=User+Name"),
+                SizedBox(width: 16),
+                DSAvatar(size: 32, imageUrl: null),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Seção Inputs
+          _buildSectionHeader("Inputs"),
+          Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: const DSSearchBar(hintText: "Search bar component", readOnly: true),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Seção Chat Tiles
+          _buildSectionHeader(s.sectionListTiles),
           Card(
             elevation: 0,
+            margin: EdgeInsets.zero,
             child: Column(
-              children: const [
+              children: [
                 DSChatTile(
-                  name: "Chaves",
-                  lastMessage: "Isso isso isso",
+                  name: s.exampleName1,
+                  lastMessage: s.exampleMessage1,
                   time: "10:00",
-                  avatarUrl: "https://ui-avatars.com/api/?name=Chaves",
+                  avatarUrl: "https://imagem.natelinha.uol.com.br/original/Chaves-Amazon_fc6facde849860724ed4afc8361abe83b4cc60d4.jpeg",
                   unreadCount: 2,
                 ),
-                Divider(height: 1, indent: 70),
+                const Divider(height: 1, indent: 70),
                 DSChatTile(
-                  name: "Seu Madruga",
-                  lastMessage: "Só não te dou outra...",
-                  time: "Ontem",
-                  avatarUrl: "https://ui-avatars.com/api/?name=Seu+Madruga",
+                  name: s.exampleName2,
+                  lastMessage: s.exampleMessage2,
+                  time: "16:04",
+                  avatarUrl: "https://www.rbsdirect.com.br/imagesrc/24341400.jpg?w=700",
                   isMuted: true,
                 ),
               ],
             ),
           ),
+
           const SizedBox(height: 24),
-          const Text("Search Bar", style: TextStyle(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          const DSSearchBar(hintText: "Buscar no catálogo...", readOnly: true),
+
+          // Seção Mensagens
+          _buildSectionHeader(s.sectionBubbles),
+          Container(
+            padding: const EdgeInsets.all(16),
+            color: AppColors.backgroundChat,
+            child: Column(
+              children: [
+                DSMessageBubble(
+                  text: s.exampleMessageReceived,
+                  time: "09:00",
+                  isMe: false,
+                ),
+                DSMessageBubble(
+                  text: s.exampleMessageSent,
+                  time: "09:02",
+                  isMe: true,
+                  isRead: true,
+                ),
+                DSMessageBubble(
+                  text: s.exampleMessageLong,
+                  time: "09:05",
+                  isMe: false,
+                ),
+              ],
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0, left: 4),
+      child: Text(
+        title.toUpperCase(),
+        style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+            letterSpacing: 1.0
+        ),
       ),
     );
   }
