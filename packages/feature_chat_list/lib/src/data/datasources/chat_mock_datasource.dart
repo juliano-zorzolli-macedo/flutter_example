@@ -1,4 +1,5 @@
 import '../../domain/entities/conversation.dart';
+import '../../domain/entities/message.dart';
 
 class ChatMockDataSource {
   Future<List<Conversation>> getConversations() async {
@@ -45,6 +46,17 @@ class ChatMockDataSource {
         unreadCount: 0,
         avatarUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_Xfyf7Y_EBW3ScYgKRyGhxC_PyLjDQh24pg&s',
       ),
+    ];
+  }
+
+  Future<List<Message>> getChatHistory(String chatId) async {
+    await Future.delayed(const Duration(milliseconds: 800));
+    return [
+      Message(id: '1', text: 'Olá! Como você está?', time: '09:00', isMe: false),
+      Message(id: '2', text: 'Tudo ótimo por aqui e ai?', time: '09:01', isMe: true, isRead: true),
+      Message(id: '3', text: 'Tudo certo. Viu a atualização do app?', time: '09:02', isMe: false),
+      Message(id: '4', text: 'Sim! Ficou excelente a nova arquitetura 🚀', time: '09:05', isMe: true, isRead: true),
+      Message(id: '5', text: 'Essa mensagem é do chat ID: $chatId', time: '09:10', isMe: false),
     ];
   }
 }

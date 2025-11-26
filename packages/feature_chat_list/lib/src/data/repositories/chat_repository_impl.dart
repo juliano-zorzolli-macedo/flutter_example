@@ -1,9 +1,9 @@
-import '../../domain/entities/conversation.dart';
-import '../../domain/repositories/chat_repository.dart';
-import '../datasources/chat_mock_datasource.dart';
 import 'dart:convert';
 import 'package:core_secure_storage/core_secure_storage.dart';
-
+import '../../domain/entities/conversation.dart';
+import '../../domain/entities/message.dart';
+import '../../domain/repositories/chat_repository.dart';
+import '../datasources/chat_mock_datasource.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   final ChatMockDataSource dataSource;
@@ -14,6 +14,7 @@ class ChatRepositoryImpl implements ChatRepository {
   @override
   Future<List<Conversation>> getConversations() async {
     final conversations = await dataSource.getConversations();
+
     try {
       final List<Map<String, dynamic>> jsonList = conversations.map((c) => {
         'id': c.id,
@@ -25,14 +26,16 @@ class ChatRepositoryImpl implements ChatRepository {
         'avatarUrl': c.avatarUrl,
       }).toList();
 
-      final jsonString = jsonEncode(jsonList);
-
-      await secureStorage.saveChatList(jsonString);
-      print("✅ Lista de chats salva e encriptada no Android!");
+      await secureStorage.saveChatList(jsonEncode(jsonList));
 
     } catch (e) {
       print("⚠️ Erro ao salvar cache nativo: $e");
     }
     return conversations;
+  }
+
+  @override
+  Future<List<Message>> getChatHistory(String chatId) async {
+    return await dataSource.getChatHistory(chatId);
   }
 }

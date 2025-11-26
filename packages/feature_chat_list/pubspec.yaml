@@ -14,6 +14,9 @@ dependencies:
   core_secure_storage:
     path: ../core_secure_storage
 
+  # Router
+  go_router: ^13.2.0
+
   # State Management
   flutter_bloc: ^8.1.4
   equatable: ^2.0.5

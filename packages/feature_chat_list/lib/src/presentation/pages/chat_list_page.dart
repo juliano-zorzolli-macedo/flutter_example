@@ -64,10 +64,9 @@ class ChatListPage extends StatelessWidget {
                         final item = state.conversations[index];
                         return InkWell(
                           onTap: () {
-                            // Navegação passando objeto 'extra'
                             context.go(
                               '/chat/${item.id}',
-                              extra: {'name': item.name},
+                              extra: {'name': item.name, 'imageUrl': item.avatarUrl},
                             );
                           },
                           child: DSChatTile(
