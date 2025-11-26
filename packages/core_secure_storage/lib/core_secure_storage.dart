@@ -13,10 +13,21 @@ class CoreSecureStorage {
     }
   }
 
-  /// Recupera a string decriptada (Opcional, caso queira implementar cache offline)
+  /// Recupera a string descriptografada
   Future<String?> getChatList() async {
     try {
       final String? result = await _channel.invokeMethod('getChatList');
+      return result;
+    } on PlatformException catch (e) {
+      print("Erro ao ler do nativo: ${e.message}");
+      return null;
+    }
+  }
+
+  /// Recupera a string criptografada
+  Future<String?> getEncryptChatList() async {
+    try {
+      final String? result = await _channel.invokeMethod('getEncryptChatList');
       return result;
     } on PlatformException catch (e) {
       print("Erro ao ler do nativo: ${e.message}");

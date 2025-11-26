@@ -49,7 +49,12 @@ class ChatMockDataSource {
     ];
   }
 
-  Future<List<Message>> getChatHistory(String chatId, String lastMessage) async {
+  Future<List<Message>> getChatHistory(
+      String chatId,
+      String savedEncryptInCache,
+      String savedDecryptInCache,
+      String lastMessage
+  ) async {
     await Future.delayed(const Duration(milliseconds: 800));
     return [
       Message(id: '1', text: 'Olá! Como você está?', time: '09:00', isMe: false),
@@ -57,7 +62,9 @@ class ChatMockDataSource {
       Message(id: '3', text: 'Tudo certo. Viu a atualização do app?', time: '09:02', isMe: false),
       Message(id: '4', text: 'Sim! Ficou excelente 🚀', time: '09:05', isMe: true, isRead: true),
       Message(id: '5', text: 'Essa mensagem é do chat ID: $chatId', time: '09:10', isMe: false),
-      Message(id: '6', text: lastMessage, time: '09:10', isMe: false),
+      Message(id: '6', text: 'Lista anterior criptografada salva com sucesso utilizando o MethodChannel com o nativo: $savedEncryptInCache', time: '09:10', isMe: true),
+      Message(id: '6', text: 'Lista anterior ja descriptografada salva com sucesso utilizando o MethodChannel com o nativo: $savedDecryptInCache', time: '09:10', isMe: true),
+      Message(id: '7', text: lastMessage, time: '09:10', isMe: false),
     ];
   }
 }

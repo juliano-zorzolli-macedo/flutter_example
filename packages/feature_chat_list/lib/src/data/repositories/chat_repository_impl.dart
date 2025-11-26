@@ -36,6 +36,13 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Future<List<Message>> getChatHistory(String chatId, String lastMessage) async {
-    return await dataSource.getChatHistory(chatId, lastMessage);
+    String savedEncrypted = await secureStorage.getChatList() ?? '';
+    String savedDecrypt= await secureStorage.getEncryptChatList() ?? '';
+    return await dataSource.getChatHistory(
+        chatId,
+        savedEncrypted,
+        savedDecrypt,
+        lastMessage
+    );
   }
 }

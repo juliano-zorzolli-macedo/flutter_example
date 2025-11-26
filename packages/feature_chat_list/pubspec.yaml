@@ -1,6 +1,6 @@
 name: feature_chat_list
 description: Feature module for listing chat conversations.
-version: 0.0.1
+version: 0.0.2
 publish_to: 'none'
 
 environment:

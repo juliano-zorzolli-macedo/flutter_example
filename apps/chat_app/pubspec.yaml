@@ -15,9 +15,11 @@ dependencies:
 
   design_system:
     path: ../../packages/design_system
+    version: ^0.0.1
 
   feature_chat_list:
     path: ../../packages/feature_chat_list
+    version: ^0.0.1
 
   # --- Architecture & State
   flutter_bloc: ^9.1.1

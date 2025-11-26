@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.util.Base64
+import kotlinx.coroutines.flow.catch
 import packages.core_secure_storage.android.src.main.kotlin.com.example.core_secure_storage.CryptoManager
 
 val Context.dataStore by preferencesDataStore(name = "secure_chat_prefs")
@@ -44,6 +45,9 @@ class CoreSecureStoragePlugin: FlutterPlugin, MethodCallHandler {
             }
         } else if (call.method == "getChatList") {
             readFromDataStore(result)
+        }
+        else if (call.method == "getEncryptChatList") {
+            readFromDecryptDataStore(result)
         } else {
             result.notImplemented()
         }
@@ -69,7 +73,35 @@ class CoreSecureStoragePlugin: FlutterPlugin, MethodCallHandler {
     }
 
     private fun readFromDataStore(result: Result) {
-        result.notImplemented()
+        scope.launch {
+            try {
+                context.dataStore.data.catch { e ->
+                    result.error("SAVE_ERROR", e.message, null)
+                }.collect {
+                    result.success(it[CHAT_LIST_KEY])
+                }
+            } catch (e: Exception) {
+                result.error("SAVE_ERROR", e.message, null)
+            }
+        }
+    }
+
+    private fun readFromDecryptDataStore(result: Result) {
+        scope.launch {
+            try {
+                context.dataStore.data.catch { e ->
+                    result.error("SAVE_ERROR", e.message, null)
+                }.collect {
+                    val savedEncrypted = it[CHAT_LIST_KEY]
+                    val savedBytes = Base64.decode(savedEncrypted, Base64.DEFAULT)
+                    val decryptedBytes = cryptoManager.decrypt(savedBytes)
+                    val decryptedString = String(decryptedBytes, Charsets.UTF_8)
+                    result.success(decryptedString)
+                }
+            } catch (e: Exception) {
+                result.error("SAVE_ERROR", e.message, null)
+            }
+        }
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
