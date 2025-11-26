@@ -63,8 +63,8 @@ class ChatMockDataSource {
       Message(id: '4', text: 'Sim! Ficou excelente 🚀', time: '09:05', isMe: true, isRead: true),
       Message(id: '5', text: 'Essa mensagem é do chat ID: $chatId', time: '09:10', isMe: false),
       Message(id: '6', text: 'Lista anterior criptografada salva com sucesso utilizando o MethodChannel com o nativo: $savedEncryptInCache', time: '09:10', isMe: true),
-      Message(id: '6', text: 'Lista anterior ja descriptografada salva com sucesso utilizando o MethodChannel com o nativo: $savedDecryptInCache', time: '09:10', isMe: true),
-      Message(id: '7', text: lastMessage, time: '09:10', isMe: false),
+      Message(id: '7', text: 'Lista anterior ja descriptografada salva com sucesso utilizando o MethodChannel com o nativo: $savedDecryptInCache', time: '09:10', isMe: true),
+      Message(id: '8', text: lastMessage, time: '09:10', isMe: false),
     ];
   }
 }
