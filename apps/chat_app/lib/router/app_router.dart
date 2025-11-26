@@ -15,7 +15,13 @@ final appRouter = GoRouter(
             final extra = state.extra as Map<String, dynamic>?;
             final name = extra?['name'] ?? 'Conversa';
             final imageUrl = extra?['imageUrl'] ?? '';
-            return ChatDetailPage(chatId: id, chatName: name, imageUrl: imageUrl);
+            final lastMessage = extra?['lastMessage'] ?? '';
+            return ChatDetailPage(
+              chatId: id,
+              chatName: name,
+              imageUrl: imageUrl,
+              lastMessage: lastMessage
+            );
           },
         ),
       ],

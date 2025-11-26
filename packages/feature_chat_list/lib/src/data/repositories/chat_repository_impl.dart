@@ -35,7 +35,7 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<List<Message>> getChatHistory(String chatId) async {
-    return await dataSource.getChatHistory(chatId);
+  Future<List<Message>> getChatHistory(String chatId, String lastMessage) async {
+    return await dataSource.getChatHistory(chatId, lastMessage);
   }
 }

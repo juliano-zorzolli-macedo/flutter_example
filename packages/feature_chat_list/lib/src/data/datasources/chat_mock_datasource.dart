@@ -49,14 +49,15 @@ class ChatMockDataSource {
     ];
   }
 
-  Future<List<Message>> getChatHistory(String chatId) async {
+  Future<List<Message>> getChatHistory(String chatId, String lastMessage) async {
     await Future.delayed(const Duration(milliseconds: 800));
     return [
       Message(id: '1', text: 'Olá! Como você está?', time: '09:00', isMe: false),
       Message(id: '2', text: 'Tudo ótimo por aqui e ai?', time: '09:01', isMe: true, isRead: true),
       Message(id: '3', text: 'Tudo certo. Viu a atualização do app?', time: '09:02', isMe: false),
-      Message(id: '4', text: 'Sim! Ficou excelente a nova arquitetura 🚀', time: '09:05', isMe: true, isRead: true),
+      Message(id: '4', text: 'Sim! Ficou excelente 🚀', time: '09:05', isMe: true, isRead: true),
       Message(id: '5', text: 'Essa mensagem é do chat ID: $chatId', time: '09:10', isMe: false),
+      Message(id: '6', text: lastMessage, time: '09:10', isMe: false),
     ];
   }
 }

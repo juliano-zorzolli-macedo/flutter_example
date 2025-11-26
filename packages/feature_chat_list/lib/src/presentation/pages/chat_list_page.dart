@@ -12,7 +12,6 @@ class ChatListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Acessa as strings injetadas via contexto
     final l10n = ChatL10n.of(context);
 
     return BlocProvider(
@@ -66,7 +65,11 @@ class ChatListPage extends StatelessWidget {
                           onTap: () {
                             context.go(
                               '/chat/${item.id}',
-                              extra: {'name': item.name, 'imageUrl': item.avatarUrl},
+                              extra: {
+                                'name': item.name,
+                                'imageUrl': item.avatarUrl,
+                                'lastMessage': item.lastMessage
+                              },
                             );
                           },
                           child: DSChatTile(

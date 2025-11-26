@@ -10,18 +10,20 @@ class ChatDetailPage extends StatelessWidget {
   final String chatId;
   final String chatName;
   final String imageUrl;
+  final String lastMessage;
 
   const ChatDetailPage({
     super.key,
     required this.chatId,
     required this.chatName,
-    required this.imageUrl
+    required this.imageUrl,
+    required this.lastMessage,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GetIt.I<ChatDetailCubit>()..loadMessages(chatId),
+      create: (_) => GetIt.I<ChatDetailCubit>()..loadMessages(chatId, lastMessage),
       child: Scaffold(
         backgroundColor: AppColors.backgroundChat,
         appBar: AppBar(

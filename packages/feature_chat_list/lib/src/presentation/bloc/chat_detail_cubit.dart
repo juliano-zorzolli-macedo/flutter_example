@@ -7,10 +7,10 @@ class ChatDetailCubit extends Cubit<ChatDetailState> {
 
   ChatDetailCubit(this.getChatHistoryUseCase) : super(ChatDetailInitial());
 
-  Future<void> loadMessages(String chatId) async {
+  Future<void> loadMessages(String chatId, String lastMessage) async {
     emit(ChatDetailLoading());
     try {
-      final messages = await getChatHistoryUseCase(chatId);
+      final messages = await getChatHistoryUseCase(chatId, lastMessage);
       emit(ChatDetailLoaded(messages));
     } catch (e) {
       emit(const ChatDetailError("Erro ao carregar histórico"));
