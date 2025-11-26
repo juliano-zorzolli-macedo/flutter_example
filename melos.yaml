@@ -16,17 +16,43 @@ scripts:
     run: melos exec -- "flutter clean"
     description: Run "flutter clean" in all packages.
 
+  # Limpeza específica (útil quando troca de branch e o cache corrompe)
   clean:ui_catalog:
-    run: |
-      melos exec --scope=ui_catalog -- flutter clean
-      melos bootstrap
-    description: "Deep clean and rebuild dependencies for the UI Catalog app."
+    run: melos exec --scope=ui_catalog -- flutter clean
+    description: "Deep clean for the UI Catalog app."
+
+  clean:chat_app:
+    run: melos exec --scope=chat_app -- flutter clean
+    description: "Deep clean for the Chat App."
 
   # =============================================================================
-  # === CODE GENERATION =========================================================
+  # === CODE GENERATION (L10n & BuildRunner) ====================================
   # =============================================================================
+
+  # Comando Mestre: Gera traduções de TODOS os apps
+  l10n:
+    run: |
+      melos run l10n:ui_catalog
+      melos run l10n:chat_app
+    description: Generate localization files for all apps.
+
   l10n:ui_catalog:
     run: melos exec --scope=ui_catalog -- flutter gen-l10n
     description: Generate localization files for the UI Catalog.
 
-  postbootstrap: echo "Workspace bootstrapped!"
+  l10n:chat_app:
+    run: melos exec --scope=chat_app -- flutter gen-l10n
+    description: Generate localization files for the Chat App.
+
+  # =============================================================================
+  # === QUALITY & TESTING =======================================================
+  # =============================================================================
+  analyze:
+    run: melos exec -- "flutter analyze ."
+    description: Run flutter analyze in all packages.
+
+  test:
+    run: melos exec --dir-exists="test" -- "flutter test"
+    description: Run flutter test only in packages that have a "test" directory.
+
+  postbootstrap: echo "Workspace bootstrapped! 🚀"
