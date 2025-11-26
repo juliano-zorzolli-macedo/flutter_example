@@ -15,14 +15,14 @@ dependencies:
     path: ../core_secure_storage
 
   # Router
-  go_router: ^13.2.0
+  go_router: ^17.0.0
 
   # State Management
-  flutter_bloc: ^8.1.4
+  flutter_bloc: ^9.1.1
   equatable: ^2.0.5
 
   # DI
-  get_it: ^7.6.7
+  get_it: ^9.1.1
 
   # Local Modules
   design_system:
@@ -31,4 +31,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
